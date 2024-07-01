@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Task Types</h2>
+    <ul>
+        {% for task_type in task_types_list %}
+            <li>{{ task_type.name }}</li>
+        {% endfor %}
+    </ul>
+    {% include "includes/pagination.html" %}
+{% endblock %}
