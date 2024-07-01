@@ -4,7 +4,9 @@
     <h2>Tasks</h2>
     <ul>
         {% for task in tasks_list %}
-            <li>{{ task.name }} - {{ task.description }}</li>
+            <li>
+            <a href="{% url 'tasks:tasks-detail' task.id %}">
+              {{ task.name }}</a> - {{ task.description }}</li>
         {% endfor %}
     </ul>
     {% include "includes/pagination.html" %}

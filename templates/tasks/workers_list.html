@@ -5,7 +5,7 @@
     <ul>
         {% for worker in workers_list %}
             <li>
-                <a href="{% url 'tasks:worker-detail' pk=worker.pk %}">{{ worker.username }}</a> - {{ worker.position.name }}
+                <a href="{% url 'tasks:workers-detail' pk=worker.pk %}">{{ worker.username }}</a> - {{ worker.position.name }}
             </li>
         {% endfor %}
     </ul>

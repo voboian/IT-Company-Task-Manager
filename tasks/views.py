@@ -29,14 +29,14 @@ def index(request):
 class PositionListView(LoginRequiredMixin, ListView):
     model = Position
     context_object_name = "positions_list"
-    template_name = "tasks/position_list.html"
+    template_name = "tasks/positions_list.html"
     paginate_by = 5
 
 
 class TaskTypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "task_types_list"
-    template_name = "tasks/task_types_list.html"
+    template_name = "tasks/tasks_types_list.html"
     paginate_by = 5
 
 
@@ -61,6 +61,3 @@ class WorkerListView(LoginRequiredMixin, ListView):
 class WorkerDetailView(LoginRequiredMixin, DetailView):
     model = Worker
     queryset = Worker.objects.prefetch_related("tasks")
-
-
-
