@@ -23,27 +23,27 @@ def index(request):
         "num_visits": num_visits + 1,
     }
 
-    return render(request, "taskmanager/index.html", context=context)
+    return render(request, "tasks/index.html", context=context)
 
 
 class PositionListView(LoginRequiredMixin, ListView):
     model = Position
     context_object_name = "positions_list"
-    template_name = "taskmanager/position_list.html"
+    template_name = "tasks/position_list.html"
     paginate_by = 5
 
 
 class TaskTypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "task_types_list"
-    template_name = "taskmanager/task_types_list.html"
+    template_name = "tasks/task_types_list.html"
     paginate_by = 5
 
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks_list"
-    template_name = "taskmanager/tasks_list.html"
+    template_name = "tasks/tasks_list.html"
     paginate_by = 5
 
 
@@ -54,11 +54,13 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 class WorkerListView(LoginRequiredMixin, ListView):
     model = Worker
     context_object_name = "workers_list"
-    template_name = "taskmanager/workers_list.html"
+    template_name = "tasks/workers_list.html"
     paginate_by = 5
 
 
 class WorkerDetailView(LoginRequiredMixin, DetailView):
     model = Worker
     queryset = Worker.objects.prefetch_related("tasks")
+
+
 

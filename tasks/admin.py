@@ -18,7 +18,7 @@ class WorkerAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (("Additional Info", {"fields": ("position",)}),)
     add_fieldsets = UserAdmin.add_fieldsets + (
         ("Personal Info", {"fields": ("first_name", "last_name", "email")}),
-        ("Additional Info", {"fields": ("team", "position")}),
+        ("Additional Info", {"fields": ("position",)}),
     )
 
 
