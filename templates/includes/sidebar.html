@@ -1,17 +1,17 @@
-<ul class="sidebar">
-  <li>
-    <a href="{% url 'tasks:index' %}">Home page</a>
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'tasks:index' %}">Home</a>
   </li>
-  <li>
-    <a href="#">Tasks</a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'tasks:task-list' %}">Tasks</a>
   </li>
-  <li>
-    <a href="#">Workers</a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'tasks:worker-list' %}">Workers</a>
   </li>
-  <li>
-    <a href="#">Positions</a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'tasks:position-list' %}">Position</a>
   </li>
-  <li>
-    <a href="#">Tasks Types</a>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'tasks:task-type-list' %}">Task Types</a>
   </li>
 </ul>
