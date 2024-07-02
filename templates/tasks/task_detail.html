@@ -13,5 +13,5 @@
       <li>{{ assignee.first_name }} {{ assignee.last_name }} ({{ assignee.position.name }})</li>
     {% endfor %}
   </ul>
-  <a href="{% url 'tasks:tasks-list' %}">Back to Task List</a>
+  <a href="{% url 'tasks:tasks-list' %}" class="btn btn-danger">Back</a>
 {% endblock %}
