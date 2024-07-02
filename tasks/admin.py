@@ -4,38 +4,50 @@ from django.contrib.auth.admin import UserAdmin
 from .models import Position, Worker, TaskType, Task
 
 
+@admin.register(TaskType)
+class TaskTypeAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
-    list_display = ("name", )
-    search_fields = ("name", )
-    list_filter = ("name",)
+    list_display = ('name',)
+    search_fields = ('name',)
 
 
 @admin.register(Worker)
 class WorkerAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ("position",)
-    list_filter = UserAdmin.list_filter + ("position",)
-    fieldsets = UserAdmin.fieldsets + (("Additional Info", {"fields": ("position",)}),)
-    add_fieldsets = UserAdmin.add_fieldsets + (
-        ("Personal Info", {"fields": ("first_name", "last_name", "email")}),
-        ("Additional Info", {"fields": ("position",)}),
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'position')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
-
-
-@admin.register(TaskType)
-class TaskTypeAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-    search_fields = ("name",)
-    list_filter = ("name",)
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2'),
+        }),
+        ('Personal info', {
+            'classes': ('wide',),
+            'fields': ('first_name', 'last_name', 'email', 'position'),
+        }),
+    )
+    list_display = ('username', 'email', 'first_name', 'last_name', 'position', 'is_staff')
+    search_fields = ('username', 'first_name', 'last_name', 'email')
+    ordering = ('username',)
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = (
-        "name",
+    list_display = ('name', 'task_type', 'priority', 'deadline', 'is_completed')
+    list_filter = ('task_type', 'priority', 'is_completed')
+    search_fields = ('name', 'description')
+    filter_horizontal = ('assignees',)
 
+    fieldsets = (
+        (None, {'fields': ('name', 'description')}),
+        ('Details', {'fields': ('task_type', 'priority', 'deadline', 'is_completed')}),
+        ('Assignees', {'fields': ('assignees',)}),
     )
-    list_filter = (
-        "name",
-    )
-    search_fields = ("name",)
