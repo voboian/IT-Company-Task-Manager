@@ -52,7 +52,6 @@ class PositionDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy("tasks:position-list")
 
 
-
 class TaskTypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "task_types_list"
@@ -76,7 +75,6 @@ class TaskTypeUpdateView(LoginRequiredMixin, UpdateView):
 class TaskTypeDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskType
     success_url = reverse_lazy("tasks:tasks-type-list")
-
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -106,6 +104,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy("tasks:tasks-list")
+
 
 class WorkerListView(LoginRequiredMixin, ListView):
     model = Worker
