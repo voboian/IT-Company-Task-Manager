@@ -1,22 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-        <h2>Positions</h2>
-        <a href="{% url 'tasks:position-create' %}" class="btn btn-primary mt-3">Create</a>
-        <ul class="list-group mt-3">
-            {% for position in positions_list %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        {{ position.name }}
-                    </div>
-                    <div class="btn-group" role="group">
-                        <a href="{% url 'tasks:position-update' position.id %}" class="btn btn-info btn-sm">Update</a>
-                        <a href="{% url 'tasks:position-delete' position.id %}" class="btn btn-danger btn-sm">Delete</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-        {% include "includes/pagination.html" %}
+  <h2>Positions</h2>
+  <a href="{% url 'tasks:position-create' %}" class="btn btn-primary mb-3">Create Position</a>
+  <form method="get" action="{% url 'tasks:position-list' %}" class="mb-3">
+    <div class="input-group">
+      <input type="text" name="name" value="{{ search_value }}" class="form-control" placeholder="Search position">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+      </div>
     </div>
+  </form>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for position in positions_list %}
+        <tr>
+          <td>{{ position.name }}</td>
+          <td>
+            <a href="{% url 'tasks:position-update' position.id %}" class="btn btn-sm btn-info">Update</a>
+            <a href="{% url 'tasks:position-delete' position.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include "includes/pagination.html" %}
 {% endblock %}

@@ -33,6 +33,26 @@ class PositionListView(LoginRequiredMixin, ListView):
     template_name = "tasks/positions_list.html"
     paginate_by = 5
 
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        search_value = self.request.GET.get("name", "")
+
+        context["segment"] = ["search", "positions"]
+        context["search_name"] = "name"
+        context["search_value"] = search_value if search_value else ""
+        context["search_placeholder"] = "Search position"
+
+        return context
+
+    def get_queryset(self):
+        queryset = Position.objects.all()
+        search_value = self.request.GET.get("name", "")
+
+        if search_value:
+            queryset = queryset.filter(name__icontains=search_value)
+
+        return queryset
+
 
 class PositionCreateView(LoginRequiredMixin, CreateView):
     model = Position
