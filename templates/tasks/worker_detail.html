@@ -1,19 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="row">
-    <div class="col-xl-12">
-      <div class="card Recent-Users p-3">
-        <h3 class="text-center">{{ worker.username }}</h3>
-
-        <h5>First name: {{ worker.first_name }}</h5>
-        <h5>Last name: {{ worker.last_name }}</h5>
-        <h5>Email: {{ worker.email }}</h5>
-        <h5>Position: {{ worker.position.name }}</h5>
-        <h5>Last login: {{ worker.last_login }}</h5>
-      </div>
-
-      <a href="{% url "tasks:workers-list" %}" class="btn btn-danger">Back</a>
+<div class="container mt-5">
+    <h2>Worker Detail</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ worker.username }}</h5>
+            <p class="card-text"><strong>First Name:</strong> {{ worker.first_name }}</p>
+            <p class="card-text"><strong>Last Name:</strong> {{ worker.last_name }}</p>
+            <p class="card-text"><strong>Email:</strong> {{ worker.email }}</p>
+            <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
+            <h5>Assigned Tasks:</h5>
+            <ul class="list-group mb-3">
+                {% for task in worker.tasks.all %}
+                    <li class="list-group-item">
+                        <a href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-warning">Update</a>
+            <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-danger">Delete</a>
+        </div>
     </div>
-  </div>
-{% endblock content %}
+</div>
+{% endblock %}

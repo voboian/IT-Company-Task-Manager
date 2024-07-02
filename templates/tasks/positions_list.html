@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Positions</h2>
-    <a href="{% url 'tasks:position-create' %}" class="ml-5">Create</a>
-    <ul>
-        {% for position in positions_list %}
-            <li>{{ position.name }}</li>
-        {% endfor %}
-    </ul>
-    {% include "includes/pagination.html" %}
+    <div class="container">
+        <h2>Positions</h2>
+        <a href="{% url 'tasks:position-create' %}" class="btn btn-primary mt-3">Create</a>
+        <ul class="list-group mt-3">
+            {% for position in positions_list %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        {{ position.name }}
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'tasks:position-update' position.id %}" class="btn btn-info btn-sm">Update</a>
+                        <a href="{% url 'tasks:position-delete' position.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% include "includes/pagination.html" %}
+    </div>
 {% endblock %}

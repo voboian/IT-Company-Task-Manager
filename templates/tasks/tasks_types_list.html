@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2>Task Types</h2>
-    <a href="{% url 'tasks:tasks-type-create' %}" class="ml-5">Create</a>  
-    <ul>
-        {% for task_type in task_types_list %}
-            <li>{{ task_type.name }}</li>
-        {% endfor %}
-    </ul>
-    {% include "includes/pagination.html" %}
+    <div class="container">
+        <h2>Task Types</h2>
+        <a href="{% url 'tasks:tasks-type-create' %}" class="btn btn-primary mt-3">Create</a>
+        <ul class="list-group mt-3">
+            {% for task_type in task_types_list %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ task_type.name }}
+                    <div class="btn-group" role="group" aria-label="Actions">
+                        <a href="{% url 'tasks:tasks-type-update' task_type.pk %}" class="btn btn-warning btn-sm">Update</a>
+                        <a href="{% url 'tasks:tasks-type-delete' task_type.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% include "includes/pagination.html" %}
+    </div>
 {% endblock %}
