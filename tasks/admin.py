@@ -6,48 +6,49 @@ from .models import Position, Worker, TaskType, Task
 
 @admin.register(TaskType)
 class TaskTypeAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
+    list_display = ("name",)
+    search_fields = ("name",)
 
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
-    list_display = ('name',)
-    search_fields = ('name',)
+    list_display = ("name",)
+    search_fields = ("name",)
 
 
 @admin.register(Worker)
 class WorkerAdmin(UserAdmin):
     fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'position')}),
-        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+        (None, {"fields": ("username", "password")}),
+        ("Personal info", {"fields": ("first_name", "last_name", "email", "position")}),
+        ("Permissions",
+         {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
     add_fieldsets = (
         (None, {
-            'classes': ('wide',),
-            'fields': ('username', 'password1', 'password2'),
+            "classes": ("wide",),
+            "fields": ("username", "password1", "password2"),
         }),
-        ('Personal info', {
-            'classes': ('wide',),
-            'fields': ('first_name', 'last_name', 'email', 'position'),
+        ("Personal info", {
+            "classes": ("wide",),
+            "fields": ("first_name", "last_name", "email", "position"),
         }),
     )
-    list_display = ('username', 'email', 'first_name', 'last_name', 'position', 'is_staff')
-    search_fields = ('username', 'first_name', 'last_name', 'email')
-    ordering = ('username',)
+    list_display = ("username", "email", "first_name", "last_name", "position", "is_staff")
+    search_fields = ("username", "first_name", "last_name", "email")
+    ordering = ("username",)
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('name', 'task_type', 'priority', 'deadline', 'is_completed')
-    list_filter = ('task_type', 'priority', 'is_completed')
-    search_fields = ('name', 'description')
-    filter_horizontal = ('assignees',)
+    list_display = ("name", "task_type", "priority", "deadline", "is_completed")
+    list_filter = ("task_type", "priority", "is_completed")
+    search_fields = ("name", "description")
+    filter_horizontal = ("assignees",)
 
     fieldsets = (
-        (None, {'fields': ('name', 'description')}),
-        ('Details', {'fields': ('task_type', 'priority', 'deadline', 'is_completed')}),
-        ('Assignees', {'fields': ('assignees',)}),
+        (None, {"fields": ("name", "description")}),
+        ("Details", {"fields": ("task_type", "priority", "deadline", "is_completed")}),
+        ("Assignees", {"fields": ("assignees",)}),
     )

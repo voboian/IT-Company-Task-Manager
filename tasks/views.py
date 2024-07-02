@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
-
+from tasks.forms import WorkerCreationForm
 from tasks.models import Task, Worker, Position, TaskType
 
 
@@ -87,6 +87,6 @@ class WorkerDetailView(LoginRequiredMixin, DetailView):
 
 class WorkerCreateView(LoginRequiredMixin, CreateView):
     model = Worker
-    fields = "__all__"
+    form_class = WorkerCreationForm
     success_url = reverse_lazy("tasks:workers-list")
     template_name = "tasks/workers_create.html"
