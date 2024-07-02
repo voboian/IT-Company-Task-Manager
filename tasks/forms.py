@@ -1,5 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Worker
+from django import forms
+
+
+from .models import Worker, Task
 
 
 class WorkerCreationForm(UserCreationForm):
@@ -28,4 +32,44 @@ class WorkerChangeForm(UserChangeForm):
             "is_active",
             "is_staff",
             "is_superuser",
-            "user_permissions")
+            )
+
+
+class TaskForm(forms.ModelForm):
+    deadline = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}))
+    assignees = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    class Meta:
+        model = Task
+        fields = (
+            "name",
+            "description",
+            "deadline",
+            "priority",
+            "task_type",
+            "assignees",
+        )
+
+
+class WorkerSearchForm(forms.Form):
+    username = forms.CharField(max_length=255, required=False, label="Username")
+    first_name = forms.CharField(max_length=255, required=False, label="First Name")
+    last_name = forms.CharField(max_length=255, required=False, label="Last Name")
+    email = forms.EmailField(required=False, label="Email")
+
+
+class TaskSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False, label="Name")
+    description = forms.CharField(max_length=255, required=False, label="Description")
+    priority = forms.ChoiceField(choices=Task.PRIORITY_CHOICES, required=False, label="Priority")
+
+
+class TaskTypeSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False, label="Name")
+
+
+class PositionSearchForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False, label="Name")

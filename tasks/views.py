@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from tasks.forms import WorkerCreationForm, WorkerChangeForm
+from tasks.forms import WorkerCreationForm, WorkerChangeForm, TaskForm, WorkerSearchForm
 from tasks.models import Task, Worker, Position, TaskType
 
 
@@ -94,7 +94,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    fields = "__all__"
+    form_class = TaskForm
     success_url = reverse_lazy("tasks:tasks-list")
     template_name = "tasks/tasks_form.html"
 
@@ -117,6 +117,26 @@ class WorkerListView(LoginRequiredMixin, ListView):
     context_object_name = "workers_list"
     template_name = "tasks/workers_list.html"
     paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super(WorkerListView, self).get_context_data(**kwargs)
+        search_value = self.request.GET.get("username")
+
+        context["segment"] = ["search", "workers"]
+        context["search_name"] = "username"
+        context["search_value"] = search_value if search_value else ""
+        context["search_placeholder"] = "Search worker"
+
+        return context
+
+    def get_queryset(self):
+        queryset = Worker.objects.select_related("position")
+        search_value = self.request.GET.get("username", "")
+
+        if search_value:
+            queryset = queryset.filter(username__icontains=search_value)
+
+        return queryset
 
 
 class WorkerDetailView(LoginRequiredMixin, DetailView):
