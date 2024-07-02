@@ -1,20 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-        <h2>Task Types</h2>
-        <a href="{% url 'tasks:tasks-type-create' %}" class="btn btn-primary mt-3">Create</a>
-        <ul class="list-group mt-3">
-            {% for task_type in task_types_list %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ task_type.name }}
-                    <div class="btn-group" role="group" aria-label="Actions">
-                        <a href="{% url 'tasks:tasks-type-update' task_type.pk %}" class="btn btn-warning btn-sm">Update</a>
-                        <a href="{% url 'tasks:tasks-type-delete' task_type.pk %}" class="btn btn-danger btn-sm">Delete</a>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-        {% include "includes/pagination.html" %}
+  <h2>Task Types</h2>
+  <a href="{% url 'tasks:tasks-type-create' %}" class="btn btn-primary mb-3">Create Task Type</a>
+  <form method="get" action="{% url 'tasks:tasks-type-list' %}" class="mb-3">
+    <div class="input-group">
+      <input type="text" name="name" value="{{ search_value }}" class="form-control" placeholder="Search task type">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+      </div>
     </div>
+  </form>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for task_type in task_types_list %}
+        <tr>
+          <td>{{ task_type.name }}</td>
+          <td>
+            <a href="{% url 'tasks:tasks-type-update' task_type.id %}" class="btn btn-sm btn-info">Update</a>
+            <a href="{% url 'tasks:tasks-type-delete' task_type.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include "includes/pagination.html" %}
 {% endblock %}

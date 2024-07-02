@@ -60,6 +60,26 @@ class TaskTypeListView(LoginRequiredMixin, ListView):
     template_name = "tasks/tasks_types_list.html"
     paginate_by = 5
 
+    def get_context_data(self, *, object_list=None, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        search_value = self.request.GET.get("name", "")
+
+        context["segment"] = ["search", "task_types"]
+        context["search_name"] = "name"
+        context["search_value"] = search_value if search_value else ""
+        context["search_placeholder"] = "Search task type"
+
+        return context
+
+    def get_queryset(self):
+        queryset = TaskType.objects.all()
+        search_value = self.request.GET.get("name", "")
+
+        if search_value:
+            queryset = queryset.filter(name__icontains=search_value)
+
+        return queryset
+
 
 class TaskTypeCreateView(LoginRequiredMixin, CreateView):
     model = TaskType
