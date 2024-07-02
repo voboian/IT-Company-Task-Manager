@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
-from tasks.forms import WorkerCreationForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from tasks.forms import WorkerCreationForm, WorkerChangeForm
 from tasks.models import Task, Worker, Position, TaskType
 
 
@@ -41,6 +41,18 @@ class PositionCreateView(LoginRequiredMixin, CreateView):
     template_name = "tasks/positions_create.html"
 
 
+class PositionUpdateView(LoginRequiredMixin, UpdateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:position-list")
+
+
+class PositionDeleteView(LoginRequiredMixin, DeleteView):
+    model = Position
+    success_url = reverse_lazy("tasks:position-list")
+
+
+
 class TaskTypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "task_types_list"
@@ -53,6 +65,18 @@ class TaskTypeCreateView(LoginRequiredMixin, CreateView):
     fields = "__all__"
     success_url = reverse_lazy("tasks:tasks-type-list")
     template_name = "tasks/tasks_types_create.html"
+
+
+class TaskTypeUpdateView(LoginRequiredMixin, UpdateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:tasks-type-list")
+
+
+class TaskTypeDeleteView(LoginRequiredMixin, DeleteView):
+    model = TaskType
+    success_url = reverse_lazy("tasks:tasks-type-list")
+
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -73,6 +97,16 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     template_name = "tasks/tasks_create.html"
 
 
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:tasks-list")
+
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    model = Task
+    success_url = reverse_lazy("tasks:tasks-list")
+
 class WorkerListView(LoginRequiredMixin, ListView):
     model = Worker
     context_object_name = "workers_list"
@@ -90,3 +124,14 @@ class WorkerCreateView(LoginRequiredMixin, CreateView):
     form_class = WorkerCreationForm
     success_url = reverse_lazy("tasks:workers-list")
     template_name = "tasks/workers_create.html"
+
+
+class WorkerUpdateView(LoginRequiredMixin, UpdateView):
+    model = Worker
+    form_class = WorkerChangeForm
+    success_url = reverse_lazy("tasks:workers-list")
+
+
+class WorkerDeleteView(LoginRequiredMixin, DeleteView):
+    model = Worker
+    success_url = reverse_lazy("tasks:workers-list")
