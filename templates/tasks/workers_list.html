@@ -2,6 +2,7 @@
 
 {% block content %}
     <h2>Workers</h2>
+    <a href="{% url 'tasks:workers-create' %}" class="ml-5">Create</a>
     <ul>
         {% for worker in workers_list %}
             <li>

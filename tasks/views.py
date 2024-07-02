@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from tasks.models import Task, Worker, Position, TaskType
 
@@ -33,11 +34,25 @@ class PositionListView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
 
+class PositionCreateView(LoginRequiredMixin, CreateView):
+    model = Position
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:position-list")
+    template_name = "tasks/positions_create.html"
+
+
 class TaskTypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "task_types_list"
     template_name = "tasks/tasks_types_list.html"
     paginate_by = 5
+
+
+class TaskTypeCreateView(LoginRequiredMixin, CreateView):
+    model = TaskType
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:tasks-type-list")
+    template_name = "tasks/tasks_types_create.html"
 
 
 class TaskListView(LoginRequiredMixin, ListView):
@@ -51,6 +66,13 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
 
 
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:tasks-list")
+    template_name = "tasks/tasks_create.html"
+
+
 class WorkerListView(LoginRequiredMixin, ListView):
     model = Worker
     context_object_name = "workers_list"
@@ -61,3 +83,10 @@ class WorkerListView(LoginRequiredMixin, ListView):
 class WorkerDetailView(LoginRequiredMixin, DetailView):
     model = Worker
     queryset = Worker.objects.prefetch_related("tasks")
+
+
+class WorkerCreateView(LoginRequiredMixin, CreateView):
+    model = Worker
+    fields = "__all__"
+    success_url = reverse_lazy("tasks:workers-list")
+    template_name = "tasks/workers_create.html"

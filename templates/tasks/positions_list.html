@@ -2,6 +2,7 @@
 
 {% block content %}
     <h2>Positions</h2>
+    <a href="{% url 'tasks:tasks-type-create' %}" class="ml-5">Create</a>
     <ul>
         {% for position in positions_list %}
             <li>{{ position.name }}</li>

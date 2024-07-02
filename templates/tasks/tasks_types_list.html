@@ -2,6 +2,7 @@
 
 {% block content %}
     <h2>Task Types</h2>
+    <a href="{% url 'tasks:tasks-type-create' %}" class="ml-5">Create</a>  
     <ul>
         {% for task_type in task_types_list %}
             <li>{{ task_type.name }}</li>
