@@ -1,42 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2>Workers</h2>
-    <form method="get" class="form-inline mb-3">
-        <input type="text" name="{{ search_name }}" value="{{ search_value }}" placeholder="{{ search_placeholder }}" class="form-control mr-2">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-    <div class="mb-3">
-        <a href="{% url 'tasks:workers-create' %}" class="btn btn-primary">Create Worker</a>
+  <h2>Workers</h2>
+  <a href="{% url 'tasks:workers-create' %}" class="btn btn-primary mb-3">Create Worker</a>
+  <form method="get" action="{% url 'tasks:workers-list' %}" class="mb-3">
+    <div class="input-group">
+      <input type="text" name="username" value="{{ search_value }}" class="form-control" placeholder="Search worker">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+      </div>
     </div>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Position</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for worker in workers_list %}
-                <tr>
-                    <td><a href="{% url 'tasks:workers-detail' worker.id %}">{{ worker.username }}</a></td>
-                    <td>{{ worker.first_name }}</td>
-                    <td>{{ worker.last_name }}</td>
-                    <td>{{ worker.email }}</td>
-                    <td>{{ worker.position.name }}</td>
-                    <td>
-                        <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-sm btn-warning">Update</a>
-                        <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-sm btn-danger">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% include "includes/pagination.html" %}
-</div>
+  </form>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Username</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Position</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for worker in workers_list %}
+        <tr>
+          <td><a href="{% url 'tasks:workers-detail' worker.id %}">{{ worker.username }}</a></td>
+          <td>{{ worker.first_name }}</td>
+          <td>{{ worker.last_name }}</td>
+          <td>{{ worker.email }}</td>
+          <td>{{ worker.position.name }}</td>
+          <td>
+            <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-sm btn-info">Update</a>
+            <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include "includes/pagination.html" %}
 {% endblock %}
