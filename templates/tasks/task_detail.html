@@ -7,7 +7,18 @@
   <p><strong>Is Completed:</strong> {{ object.is_completed }}</p>
   <p><strong>Priority:</strong> {{ object.get_priority_display }}</p>
   <p><strong>Task Type:</strong> {{ object.task_type.name }}</p>
-  <p><strong>Assignees:</strong></p>
+  <div class="row">
+    <p><strong>Assignees:</strong></p>
+    {% if task in user.tasks.all %}
+      <a href="{% url 'tasks:toggle-task-assign' pk=task.id %}" class="btn btn-danger link-to-page">
+        Delete me from this car
+      </a>
+    {% else %}
+      <a href="{% url 'tasks:toggle-task-assign' pk=task.id %}" class="btn btn-success link-to-page">
+        Assign me from this car
+      </a>
+    {% endif %}
+  </div>
   <ul>
     {% for assignee in object.assignees.all %}
       <li>{{ assignee.first_name }} {{ assignee.last_name }} ({{ assignee.position.name }})</li>
