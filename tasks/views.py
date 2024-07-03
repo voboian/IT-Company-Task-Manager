@@ -187,6 +187,13 @@ class WorkerListView(LoginRequiredMixin, ListView):
         context["search_name"] = "username"
         context["search_value"] = search_value if search_value else ""
         context["search_placeholder"] = "Search worker"
+        workers = context["workers_list"]
+        for worker in workers:
+            completed_tasks = worker.tasks.filter(is_completed=True)
+            not_completed_tasks = worker.tasks.filter(is_completed=False)
+
+            worker.completed_tasks_count = completed_tasks.count()
+            worker.not_completed_tasks_count = not_completed_tasks.count()
 
         return context
 

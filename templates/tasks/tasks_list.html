@@ -18,6 +18,7 @@
         <th scope="col">Description</th>
         <th scope="col">Deadline</th>
         <th scope="col">Priority</th>
+        <th scope="col">Is completed</th>
         <th scope="col">Task Type</th>
         <th scope="col">Actions</th>
       </tr>
@@ -29,6 +30,7 @@
           <td>{{ task.description }}</td>
           <td>{{ task.deadline }}</td>
           <td>{{ task.priority }}</td>
+          <td>{{ task.is_completed }}</td>
           <td>{{ task.task_type.name }}</td>
           <td>
             <a href="{% url 'tasks:tasks-update' task.id %}" class="btn btn-sm btn-info">Update</a>

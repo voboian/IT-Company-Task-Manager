@@ -19,6 +19,8 @@
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
         <th scope="col">Position</th>
+        <th scope="col">Completed Tasks</th>
+        <th scope="col">Not Completed Tasks</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -30,6 +32,8 @@
           <td>{{ worker.last_name }}</td>
           <td>{{ worker.email }}</td>
           <td>{{ worker.position.name }}</td>
+          <td>{{ worker.completed_tasks_count }}</td>
+          <td>{{ worker.not_completed_tasks_count }}</td>
           <td>
             <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-sm btn-info">Update</a>
             <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-sm btn-danger">Delete</a>

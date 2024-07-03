@@ -1,26 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mt-5">
+  <div class="container mt-5">
     <h2>Worker Detail</h2>
     <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ worker.username }}</h5>
-            <p class="card-text"><strong>First Name:</strong> {{ worker.first_name }}</p>
-            <p class="card-text"><strong>Last Name:</strong> {{ worker.last_name }}</p>
-            <p class="card-text"><strong>Email:</strong> {{ worker.email }}</p>
-            <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
-            <h5>Assigned Tasks:</h5>
-            <ul class="list-group mb-3">
-                {% for task in worker.tasks.all %}
-                    <li class="list-group-item">
-                        <a href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-warning">Update</a>
-            <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-danger">Delete</a>
-        </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ worker.username }}</h5>
+        <p class="card-text"><strong>First Name:</strong> {{ worker.first_name }}</p>
+        <p class="card-text"><strong>Last Name:</strong> {{ worker.last_name }}</p>
+        <p class="card-text"><strong>Email:</strong> {{ worker.email }}</p>
+        <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
+      
+        <h3>Completed Tasks:</h3>
+        <ul>
+          {% for task in worker.completed_tasks %}
+            <li><a href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a></li>
+          {% empty %}
+            <li>No completed tasks</li>
+          {% endfor %}
+        </ul>
+
+        <h3>Not Completed Tasks:</h3>
+        <ul>
+          {% for task in worker.not_completed_tasks %}
+            <li><a href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a></li>
+          {% empty %}
+            <li>No not completed tasks</li>
+          {% endfor %}
+        </ul>
+
+        <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-warning">Update</a>
+        <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-danger">Delete</a>
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}
