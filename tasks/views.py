@@ -269,3 +269,17 @@ class TagListView(ListView):
             queryset = queryset.filter(name__icontains=search_value)
 
         return queryset
+
+
+class TagCreateView(LoginRequiredMixin, CreateView):
+    model = Tag
+    fields = ["name"]
+    success_url = reverse_lazy("tasks:tags-list")
+    template_name = "tasks/tags_form.html"
+
+
+class TagUpdateView(LoginRequiredMixin, UpdateView):
+    model = Tag
+    fields = ["name"]
+    success_url = reverse_lazy("tasks:tags-list")
+    template_name = "tasks/tags_form.html"

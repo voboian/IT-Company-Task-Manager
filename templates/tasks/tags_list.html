@@ -2,7 +2,7 @@
 
 {% block content %}
   <h2>Tags</h2>
-  <a href="{% url 'tasks:position-create' %}" class="btn btn-primary mb-3">Create Tag</a>
+  <a href="{% url 'tasks:tags-create' %}" class="btn btn-primary mb-3">Create Tag</a>
   <form method="get" action="{% url 'tasks:tags-list' %}" class="mb-3">
     <div class="input-group">
       <input type="text" name="name" value="{{ search_value }}" class="form-control" placeholder="Search tag">
@@ -23,7 +23,7 @@
         <tr>
           <td>{{ tag.name }}</td>
           <td>
-            <a href="{% url 'tasks:position-update' tag.id %}" class="btn btn-sm btn-info">Update</a>
+            <a href="{% url 'tasks:tags-update' tag.id %}" class="btn btn-sm btn-info">Update</a>
             <a href="{% url 'tasks:position-delete' tag.id %}" class="btn btn-sm btn-danger">Delete</a>
           </td>
         </tr>
