@@ -9,6 +9,13 @@ class TaskType(models.Model):
         return self.name
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class Position(models.Model):
     name = models.CharField(max_length=255)
 
@@ -41,6 +48,7 @@ class Task(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
+    tags = models.ManyToManyField(Tag, blank=True, related_name="tasks")
     deadline = models.DateTimeField()
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
