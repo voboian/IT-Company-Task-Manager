@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 
 
-from .models import Worker, Task
+from .models import Worker, Task, Tag
 
 
 class WorkerCreationForm(UserCreationForm):
@@ -46,6 +46,11 @@ class TaskForm(forms.ModelForm):
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
 
     class Meta:
         model = Task
@@ -57,6 +62,7 @@ class TaskForm(forms.ModelForm):
             "is_completed",
             "task_type",
             "assignees",
+            "tags",
         )
 
     def clean_deadline(self) -> datetime:

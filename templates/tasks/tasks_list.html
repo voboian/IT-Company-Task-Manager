@@ -20,6 +20,7 @@
         <th scope="col">Priority</th>
         <th scope="col">Is completed</th>
         <th scope="col">Task Type</th>
+        <th scope="col">Tags</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -32,6 +33,11 @@
           <td>{{ task.priority }}</td>
           <td>{{ task.is_completed }}</td>
           <td>{{ task.task_type.name }}</td>
+          <td>
+            {% for tag in task.tags.all %}
+              <span class="badge badge-secondary">{{ tag.name }}</span>
+            {% endfor %}
+          </td>
           <td>
             <a href="{% url 'tasks:tasks-update' task.id %}" class="btn btn-sm btn-info">Update</a>
             <a href="{% url 'tasks:tasks-delete' task.id %}" class="btn btn-sm btn-danger">Delete</a>
