@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Position, Worker, TaskType, Task
+from .models import Position, Worker, TaskType, Task, Tag
 
 
 @admin.register(TaskType)
@@ -42,13 +42,24 @@ class WorkerAdmin(UserAdmin):
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("name", "task_type", "priority", "deadline", "is_completed")
+    list_display = ("name", "task_type", "priority", "deadline", "is_completed", "display_tags")
     list_filter = ("task_type", "priority", "is_completed")
     search_fields = ("name", "description")
-    filter_horizontal = ("assignees",)
+    filter_horizontal = ("assignees", "tags")
 
     fieldsets = (
         (None, {"fields": ("name", "description")}),
         ("Details", {"fields": ("task_type", "priority", "deadline", "is_completed")}),
         ("Assignees", {"fields": ("assignees",)}),
+        ("Tags", {"fields": ("tags",)}),
     )
+
+    def display_tags(self, obj):
+        return ", ".join([tag.name for tag in obj.tags.all()])
+
+    display_tags.short_description = "Tags"
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ("name",)
