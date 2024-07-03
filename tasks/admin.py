@@ -63,3 +63,4 @@ class TaskAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ("name",)
+    search_fields = ("name",)

@@ -2,8 +2,8 @@ from django.contrib.admin import AdminSite
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
-from tasks.admin import PositionAdmin
-from tasks.models import Position
+from tasks.admin import PositionAdmin, TagAdmin
+from tasks.models import Position, Tag
 
 
 class PositionTests(TestCase):
@@ -29,3 +29,19 @@ class PositionTests(TestCase):
 
     def test_search_by_name(self) -> None:
         self.assertIn("name", self.position_admin.search_fields)
+
+
+class TagTests(TestCase):
+    def setUp(self) -> None:
+        self.admin_user = get_user_model().objects.create_superuser(
+            username="admin.user", password="Qwerty12345!"
+        )
+
+        self.site = AdminSite()
+
+        self.tag = Tag.objects.create(name="qwe", )
+
+        self.tag_admin = TagAdmin(Tag, self.site)
+
+    def test_search_by_name(self) -> None:
+        self.assertIn("name", self.tag_admin.search_fields)
