@@ -11,11 +11,11 @@
     <p><strong>Assignees:</strong></p>
     {% if task in user.tasks.all %}
       <a href="{% url 'tasks:toggle-task-assign' pk=task.id %}" class="btn btn-danger link-to-page">
-        Delete me from this car
+        Delete me from this task
       </a>
     {% else %}
       <a href="{% url 'tasks:toggle-task-assign' pk=task.id %}" class="btn btn-success link-to-page">
-        Assign me from this car
+        Assign me from this task
       </a>
     {% endif %}
   </div>
