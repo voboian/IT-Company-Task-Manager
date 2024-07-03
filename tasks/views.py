@@ -32,7 +32,7 @@ class PositionListView(LoginRequiredMixin, ListView):
     model = Position
     context_object_name = "positions_list"
     template_name = "tasks/positions_list.html"
-    paginate_by = 2
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
@@ -46,7 +46,7 @@ class PositionListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = Position.objects.all()
+        queryset = Position.objects.all().order_by("name")
         search_value = self.request.GET.get("name", "")
 
         if search_value:
@@ -93,7 +93,7 @@ class TaskTypeListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = TaskType.objects.all()
+        queryset = TaskType.objects.all().order_by("name")
         search_value = self.request.GET.get("name", "")
 
         if search_value:
@@ -140,7 +140,7 @@ class TaskListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = Task.objects.select_related("task_type").prefetch_related("assignees")
+        queryset = Task.objects.select_related("task_type").prefetch_related("assignees").order_by("name")
         search_value = self.request.GET.get("name", "")
 
         if search_value:
@@ -198,7 +198,7 @@ class WorkerListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = Worker.objects.select_related("position")
+        queryset = Worker.objects.select_related("position").order_by("username")
         search_value = self.request.GET.get("username", "")
 
         if search_value:
