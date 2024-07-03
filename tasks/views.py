@@ -283,3 +283,11 @@ class TagUpdateView(LoginRequiredMixin, UpdateView):
     fields = ["name"]
     success_url = reverse_lazy("tasks:tags-list")
     template_name = "tasks/tags_form.html"
+
+
+class TagDeleteView(LoginRequiredMixin, DeleteView):
+    model = Tag
+    success_url = reverse_lazy("tasks:tags-list")
+    template_name = "tasks/tags_confirm_delete.html"
+
+
