@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from tasks.forms import WorkerCreationForm, WorkerChangeForm, TaskForm
-from tasks.models import Task, Worker, Position, TaskType
+from tasks.models import Task, Worker, Position, TaskType, Tag
 
 
 @login_required
@@ -242,3 +242,30 @@ def toggle_assign_to_task(request, pk):
     else:
         worker.tasks.add(pk)
     return HttpResponseRedirect(reverse_lazy("tasks:tasks-detail", args=[pk]))
+
+
+class TagListView(ListView):
+    model = Tag
+    context_object_name = "tags_list"
+    template_name = "tasks/tags_list.html"
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_value = self.request.GET.get("name", "")
+
+        context["segment"] = ["search", "tags"]
+        context["search_name"] = "name"
+        context["search_value"] = search_value if search_value else ""
+        context["search_placeholder"] = "Search tag"
+
+        return context
+
+    def get_queryset(self):
+        queryset = Tag.objects.all().order_by("name").prefetch_related("tasks")
+        search_value = self.request.GET.get("name", "")
+
+        if search_value:
+            queryset = queryset.filter(name__icontains=search_value)
+
+        return queryset
