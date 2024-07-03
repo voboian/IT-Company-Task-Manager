@@ -1,3 +1,8 @@
+from datetime import datetime, date
+
+from django.core.exceptions import ValidationError
+
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
@@ -52,6 +57,14 @@ class TaskForm(forms.ModelForm):
             "task_type",
             "assignees",
         )
+
+    def clean_deadline(self) -> datetime:
+        task_deadline = self.cleaned_data["deadline"]
+
+        if task_deadline < date.today():
+            raise ValidationError("Please, select date in future")
+
+        return task_deadline
 
 
 class WorkerSearchForm(forms.Form):
