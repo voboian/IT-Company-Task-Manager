@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -192,7 +193,6 @@ class WorkerListView(LoginRequiredMixin, ListView):
         for worker in workers:
             completed_tasks = worker.tasks.filter(is_completed=True)
             not_completed_tasks = worker.tasks.filter(is_completed=False)
-
             worker.completed_tasks_count = completed_tasks.count()
             worker.not_completed_tasks_count = not_completed_tasks.count()
 
@@ -203,7 +203,11 @@ class WorkerListView(LoginRequiredMixin, ListView):
         search_value = self.request.GET.get("username", "")
 
         if search_value:
-            queryset = queryset.filter(username__icontains=search_value)
+            queryset = queryset.filter(
+                Q(username__icontains=search_value) |
+                Q(first_name__icontains=search_value) |
+                Q(last_name__icontains=search_value)
+            )
 
         return queryset
 
