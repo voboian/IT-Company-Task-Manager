@@ -4,7 +4,13 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 from tasks.forms import WorkerCreationForm, WorkerChangeForm, TaskForm
 from tasks.models import Task, Worker, Position, TaskType, Tag
 
@@ -133,7 +139,8 @@ class TaskListView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = Task.objects.select_related("task_type").prefetch_related("assignees").order_by("name")
+        queryset = (Task.objects.select_related("task_type")
+                    .prefetch_related("assignees").order_by("name"))
         search_value = self.request.GET.get("name", "")
 
         if search_value:
@@ -185,15 +192,17 @@ class WorkerListView(LoginRequiredMixin, ListView):
 
         return context
 
+    @property
     def get_queryset(self):
-        queryset = Worker.objects.select_related("position").order_by("username")
+        queryset = (Worker.objects.select_related("position")
+                    .order_by("username"))
         search_value = self.request.GET.get("username", "")
 
         if search_value:
             queryset = queryset.filter(
-                Q(username__icontains=search_value) |
-                Q(first_name__icontains=search_value) |
-                Q(last_name__icontains=search_value)
+                Q(username__icontains=search_value)
+                | Q(first_name__icontains=search_value)
+                | Q(last_name__icontains=search_value)
             )
 
         return queryset

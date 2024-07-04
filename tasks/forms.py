@@ -37,7 +37,7 @@ class WorkerChangeForm(UserChangeForm):
             "is_active",
             "is_staff",
             "is_superuser",
-            )
+        )
 
 
 class TaskForm(forms.ModelForm):
@@ -76,15 +76,31 @@ class TaskForm(forms.ModelForm):
 
 class WorkerSearchForm(forms.Form):
     username = forms.CharField(max_length=255, required=False, label="Username")
-    first_name = forms.CharField(max_length=255, required=False, label="First Name")
-    last_name = forms.CharField(max_length=255, required=False, label="Last Name")
+    first_name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="First Name"
+    )
+    last_name = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Last Name"
+    )
     email = forms.EmailField(required=False, label="Email")
 
 
 class TaskSearchForm(forms.Form):
     name = forms.CharField(max_length=255, required=False, label="Name")
-    description = forms.CharField(max_length=255, required=False, label="Description")
-    priority = forms.ChoiceField(choices=Task.PRIORITY_CHOICES, required=False, label="Priority")
+    description = forms.CharField(
+        max_length=255,
+        required=False,
+        label="Description"
+    )
+    priority = forms.ChoiceField(
+        choices=Task.PRIORITY_CHOICES,
+        required=False,
+        label="Priority"
+    )
 
 
 class TaskTypeSearchForm(forms.Form):

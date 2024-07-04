@@ -19,24 +19,24 @@ class TaskListViewTest(TestCase):
         )
         self.task.assignees.add(self.worker)
 
-        self.client.login(username='testuser', password='password')
+        self.client.login(username="testuser", password="password")
 
     def test_task_list_view(self):
-        response = self.client.get(reverse('tasks:tasks-list'))
+        response = self.client.get(reverse("tasks:tasks-list"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks/task_list.html')
+        self.assertTemplateUsed(response, "tasks/task_list.html")
         self.assertContains(response, self.task.name)
 
 
 class WorkerDetailViewTest(TestCase):
     def setUp(self):
         self.position = Position.objects.create(name="Developer")
-        self.worker = Worker.objects.create_user(username='testuser', password='password', position=self.position)
+        self.worker = Worker.objects.create_user(username="testuser", password="password", position=self.position)
 
-        self.client.login(username='testuser', password='password')
+        self.client.login(username="testuser", password="password")
 
     def test_worker_detail_view(self):
-        response = self.client.get(reverse('tasks:workers-detail', kwargs={'pk': self.worker.pk}))
+        response = self.client.get(reverse("tasks:workers-detail", kwargs={"pk": self.worker.pk}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'tasks/worker_detail.html')
+        self.assertTemplateUsed(response, "tasks/worker_detail.html")
         self.assertContains(response, self.worker.username)

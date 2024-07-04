@@ -20,9 +20,19 @@ class PositionAdmin(admin.ModelAdmin):
 class WorkerAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "email", "position")}),
-        ("Permissions",
-         {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
+        (
+            "Personal info",
+            {"fields": ("first_name", "last_name", "email", "position")}
+        ),
+        (
+            "Permissions",
+            {"fields": (
+                "is_active",
+                "is_staff",
+                "is_superuser",
+                "groups",
+                "user_permissions"
+            )}),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
     add_fieldsets = (
@@ -35,21 +45,38 @@ class WorkerAdmin(UserAdmin):
             "fields": ("first_name", "last_name", "email", "position"),
         }),
     )
-    list_display = ("username", "email", "first_name", "last_name", "position", "is_staff")
+    list_display = (
+        "username",
+        "email",
+        "first_name",
+        "last_name",
+        "position",
+        "is_staff"
+    )
     search_fields = ("username", "first_name", "last_name", "email")
     ordering = ("username",)
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("name", "task_type", "priority", "deadline", "is_completed", "display_tags")
+    list_display = (
+        "name",
+        "task_type",
+        "priority",
+        "deadline",
+        "is_completed",
+        "display_tags"
+    )
     list_filter = ("task_type", "priority", "is_completed")
     search_fields = ("name", "description")
     filter_horizontal = ("assignees", "tags")
 
     fieldsets = (
         (None, {"fields": ("name", "description")}),
-        ("Details", {"fields": ("task_type", "priority", "deadline", "is_completed")}),
+        (
+            "Details",
+            {"fields": ("task_type", "priority", "deadline", "is_completed")}
+        ),
         ("Assignees", {"fields": ("assignees",)}),
         ("Tags", {"fields": ("tags",)}),
     )
