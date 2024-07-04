@@ -33,7 +33,6 @@ def index(request):
 class PositionListView(LoginRequiredMixin, ListView):
     model = Position
     context_object_name = "positions_list"
-    template_name = "tasks/positions_list.html"
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
@@ -61,26 +60,22 @@ class PositionCreateView(LoginRequiredMixin, CreateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("tasks:position-list")
-    template_name = "tasks/positions_form.html"
 
 
 class PositionUpdateView(LoginRequiredMixin, UpdateView):
     model = Position
     fields = "__all__"
     success_url = reverse_lazy("tasks:position-list")
-    template_name = "tasks/positions_form.html"
 
 
 class PositionDeleteView(LoginRequiredMixin, DeleteView):
     model = Position
     success_url = reverse_lazy("tasks:position-list")
-    template_name = "tasks/positions_confirm_delete.html"
 
 
 class TaskTypeListView(LoginRequiredMixin, ListView):
     model = TaskType
     context_object_name = "task_types_list"
-    template_name = "tasks/tasks_types_list.html"
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
@@ -108,26 +103,22 @@ class TaskTypeCreateView(LoginRequiredMixin, CreateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("tasks:tasks-type-list")
-    template_name = "tasks/tasks_types_form.html"
 
 
 class TaskTypeUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskType
     fields = "__all__"
     success_url = reverse_lazy("tasks:tasks-type-list")
-    template_name = "tasks/tasks_types_form.html"
 
 
 class TaskTypeDeleteView(LoginRequiredMixin, DeleteView):
     model = TaskType
     success_url = reverse_lazy("tasks:tasks-type-list")
-    template_name = "tasks/tasks_types_confirm_delete.html"
 
 
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = "tasks_list"
-    template_name = "tasks/tasks_list.html"
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
@@ -159,26 +150,22 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("tasks:tasks-list")
-    template_name = "tasks/tasks_form.html"
 
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("tasks:tasks-list")
-    template_name = "tasks/tasks_form.html"
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
     success_url = reverse_lazy("tasks:tasks-list")
-    template_name = "tasks/tasks_confirm_delete.html"
 
 
 class WorkerListView(LoginRequiredMixin, ListView):
     model = Worker
     context_object_name = "workers_list"
-    template_name = "tasks/workers_list.html"
     paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs) -> dict:
@@ -221,20 +208,17 @@ class WorkerCreateView(LoginRequiredMixin, CreateView):
     model = Worker
     form_class = WorkerCreationForm
     success_url = reverse_lazy("tasks:workers-list")
-    template_name = "tasks/workers_form.html"
 
 
 class WorkerUpdateView(LoginRequiredMixin, UpdateView):
     model = Worker
     form_class = WorkerChangeForm
     success_url = reverse_lazy("tasks:workers-list")
-    template_name = "tasks/workers_form.html"
 
 
 class WorkerDeleteView(LoginRequiredMixin, DeleteView):
     model = Worker
     success_url = reverse_lazy("tasks:workers-list")
-    template_name = "tasks/workers_confirm_delete.html"
 
 
 @login_required
@@ -252,7 +236,6 @@ def toggle_assign_to_task(request, pk):
 class TagListView(ListView):
     model = Tag
     context_object_name = "tags_list"
-    template_name = "tasks/tags_list.html"
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
@@ -280,17 +263,14 @@ class TagCreateView(LoginRequiredMixin, CreateView):
     model = Tag
     fields = ["name"]
     success_url = reverse_lazy("tasks:tags-list")
-    template_name = "tasks/tags_form.html"
 
 
 class TagUpdateView(LoginRequiredMixin, UpdateView):
     model = Tag
     fields = ["name"]
     success_url = reverse_lazy("tasks:tags-list")
-    template_name = "tasks/tags_form.html"
 
 
 class TagDeleteView(LoginRequiredMixin, DeleteView):
     model = Tag
     success_url = reverse_lazy("tasks:tags-list")
-    template_name = "tasks/tags_confirm_delete.html"
