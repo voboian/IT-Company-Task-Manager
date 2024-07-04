@@ -192,7 +192,6 @@ class WorkerListView(LoginRequiredMixin, ListView):
 
         return context
 
-    @property
     def get_queryset(self):
         queryset = (Worker.objects.select_related("position")
                     .order_by("username"))
