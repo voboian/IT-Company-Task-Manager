@@ -1,0 +1,57 @@
+<footer class="footer pt-6 pb-5 bg-dark text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5">
+        <img class="navbar-brand-dark mb-4" height="35" src="{{ ASSETS_ROOT }}/img/brand/light.svg"
+             alt="Logo light">
+        <p>It is the best application for your task managing</p>
+      </div>
+      <div class="col-6 col-md-3 mb-5 mb-lg-0">
+        <span class="h5">Pages</span>
+        <ul class="footer-links mt-2">
+          <li>
+            <a href="{% url 'tasks:workers-list' %}">Workers</a>
+          </li>
+          <li>
+            <a href="{% url 'tasks:tasks-list' %}">Tasks</a>
+          </li>
+          <li>
+            <a href="{% url 'tasks:position-list' %}">Positions</a>
+          </li>
+          <li>
+            <a href="{% url 'tasks:tasks-type-list' %}">Task types</a>
+          </li>
+          <li>
+            <a href="{% url 'tasks:tags-list' %}">
+              Tags
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6 col-md-2 mb-5 mb-lg-0">
+        <span class="h5">Other</span>
+        <ul class="footer-links mt-2">
+          <li>
+            <a href="https://github.com/voboian/" target="_blank">Other Projects</a>
+          </li>
+          <li>
+            <a href="#">Contact Us</a>
+          </li>
+          <li>
+            <a href="#">Support</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <hr class="bg-secondary my-3 my-lg-5">
+    <div class="row">
+      <div class="col mb-md-0">
+        <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
+          <p class="fw-normal font-small mb-0">
+            &copy; TaskManager - coded by <a href="https://github.com/voboian/" target="_blank">Voboian</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

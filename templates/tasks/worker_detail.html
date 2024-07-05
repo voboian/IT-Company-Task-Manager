@@ -1,34 +1,77 @@
-{% extends "base.html" %}
+{% extends "layouts/base.html" %}
+
+{% block title %} Worker Details {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h2>Worker Detail</h2>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ worker.username }}</h5>
-        <p class="card-text"><strong>First Name:</strong> {{ worker.first_name }}</p>
-        <p class="card-text"><strong>Last Name:</strong> {{ worker.last_name }}</p>
-        <p class="card-text"><strong>Email:</strong> {{ worker.email }}</p>
-        <p class="card-text"><strong>Position:</strong> {{ worker.position.name }}</p>
-      
-        <h3>Completed Tasks:</h3>
-        <ul>
-          {% for task in worker.completed_tasks %}
-            <li><a href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a></li>
-          {% empty %}
-            <li>No completed tasks</li>
-          {% endfor %}
-        </ul>
 
-        <h3>Not Completed Tasks:</h3>
-        <ul>
-          {% for task in worker.not_completed_tasks %}
-            <li><a href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a></li>
-          {% empty %}
-            <li>No not completed tasks</li>
-          {% endfor %}
-        </ul>
+  <main>
+
+    <div class="section-header header-for-details-page pb-6 bg-primary text-white"></div>
+
+    <div class="section section-details section-md">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 mt-5">
+            <div class="card shadow">
+              <!-- Header -->
+              <div class="card-header bg-white p-3 d-flex justify-content-between">
+                <h3 class="text-primary mb-4">{{ worker.username }}</h3>
+                <div class="actions">
+                  <a href="{% url 'tasks:workers-update' worker.id %}" class="btn btn-outline-dark">Update</a>
+                  <a href="{% url 'tasks:workers-delete' worker.id %}" class="btn btn-outline-danger">Delete</a>
+                </div>
+
+              </div>
+              <!-- End Header -->
+              <!-- Content -->
+              <div class="card-body">
+                <ul class="list-unstyled mb-4">
+                  <li class="list-item pb-3"><strong>First Name:</strong> {{ worker.first_name }}</li>
+                  <li class="list-item pb-3"><strong>Last Name:</strong> {{ worker.last_name }}</li>
+                  <li class="list-item pb-3"><strong>Email:</strong> {{ worker.email }}</li>
+                  <li class="list-item pb-3"><strong>Position:</strong> {{ worker.position.name }}</li>
+                </ul>
+
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <h3>Completed Tasks:</h3>
+                    <ul>
+                      {% for task in worker.completed_tasks %}
+                        <li>
+                          <a class="navigation-link" href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a>
+                        </li>
+                      {% empty %}
+                        <li>No completed tasks</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <h3>Not Completed Tasks:</h3>
+                    <ul>
+                      {% for task in worker.not_completed_tasks %}
+                        <li>
+                          <a class="navigation-link" href="{% url 'tasks:tasks-detail' task.id %}">{{ task.name }}</a>
+                        </li>
+                      {% empty %}
+                        <li>No not completed tasks</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- End Content -->
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-{% endblock %}
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

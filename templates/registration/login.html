@@ -1,24 +1,62 @@
-{% extends "base.html" %}
+{% extends "layouts/base-fullscreen.html" %}
+
 {% load crispy_forms_filters %}
+
+{% block title %} Sign IN {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-{% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    <main>
 
-<h1>Login</h1>
+        <!-- Section -->
+        <section class="min-vh-100 d-flex align-items-center section-image overlay-soft-dark" data-background="{{ ASSETS_ROOT }}/img/pages/form-image.jpg">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner my-4 my-lg-0 bg-white shadow-soft border rounded border-gray-300 p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                    <a href="https://appseed.us/product/pixel-bootstrap/django/" target="_blank">Task Manager</a> - Login
+                                </h1>
+                                <br />
+                                <span class="font-weight-normal">
+                                    Add your credentials: TestAdmin | 1qazcde3                                 
+                                </span>
+                            </div>
+                          
+                            {% if next %}
+                              <p>Please login to see this page.</p>
+                            {% endif %}
+                            
+                            <form class="form-login" method="post" action="{% url 'login' %}">
+                              {% csrf_token %}
+                              {{ form|crispy }}
+                            
+                              <input type="submit" value="Login" class="btn btn-primary" />
+                              <input type="hidden" name="next" value="{{ next }}" />
+                            </form>
 
-{% if next %}
-  <p>Please login to see this page.</p>
-{% endif %}
+                            <br />
 
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {{ form|crispy }}
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    &copy; Task Manager - coded by 
+                                    <a href="https://github.com/voboian/" target="_blank"
+                                       class="fw-bold text-underline">Voboian</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <input type="submit" value="Login" class="btn btn-primary" />
-  <input type="hidden" name="next" value="{{ next }}" />
-</form>
+    </main>
 
-{% endblock %}
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
