@@ -11,6 +11,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
+
 from tasks.forms import WorkerCreationForm, WorkerChangeForm, TaskForm
 from tasks.models import Task, Worker, Position, TaskType, Tag
 
@@ -233,7 +234,7 @@ class WorkerDeleteView(LoginRequiredMixin, DeleteView):
 def toggle_assign_to_task(request, pk):
     worker = Worker.objects.get(id=request.user.id)
     if (
-        Task.objects.get(id=pk) in worker.tasks.all()
+            Task.objects.get(id=pk) in worker.tasks.all()
     ):
         worker.tasks.remove(pk)
     else:
