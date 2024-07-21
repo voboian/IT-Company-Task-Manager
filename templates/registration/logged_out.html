@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+{% load crispy_forms_filters %}
+
+{% block title %} LogOut {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+
+        <div class="section-header pb-5 bg-primary text-white">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center">
+                        <h1 class="display-3 mb-4">LogOut</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section section-form-details section-md">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                      <form action="" method="post">
+                        {% csrf_token %}
+                        <h4 class="mb-4">You've successfully logged out.</h4>
+                        <a href="{% url 'login' %}" class="btn btn-outline-dark">Click here to log in again.</a>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
