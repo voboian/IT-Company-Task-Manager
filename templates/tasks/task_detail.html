@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Worker Details {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <main>
+
+    <div class="section-header header-for-details-page pb-6 bg-primary text-white"></div>
+
+    <!-- End of Hero -->
+    <div class="section section-details section-md">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12 mt-5">
+            <div class="card shadow">
+              <!-- Header -->
+              <div class="card-header bg-white p-3 d-flex justify-content-between">
+                <h3 class="text-primary mb-4">{{ object.name }}</h3>
+                <div class="actions">
+                  <a href="{% url 'tasks:tasks-update' task.id %}" class="btn btn-outline-dark">Update</a>
+                  <a href="{% url 'tasks:tasks-delete' task.id %}" class="btn btn-outline-danger">Delete</a>
+                </div>
+
+              </div>
+              <!-- End Header -->
+              <!-- Content -->
+              <div class="card-body">
+                <ul class="list-unstyled mb-4">
+                  <li class="list-item pb-3"><strong>Description:</strong> {{ object.description }}</li>
+                  <li class="list-item pb-3"><strong>Deadline:</strong> {{ object.deadline }}</li>
+                  <li class="list-item pb-3"><strong>Is Completed:</strong> {{ object.is_completed }}</li>
+                  <li class="list-item pb-3"><strong>Priority:</strong> {{ object.get_priority_display }}</li>
+                  <li class="list-item pb-3"><strong>Task Type:</strong> {{ object.task_type.name }}</li>
+                </ul>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col-12 d-flex justify-content-between">
+                        <h3>Assignees:</h3>
+                        {% if task in user.tasks.all %}
+                          <a href="{% url 'tasks:toggle-task-assign' pk=task.id %}" class="btn btn-outline-danger">
+                            Delete me from this task
+                          </a>
+                        {% else %}
+                          <a href="{% url 'tasks:toggle-task-assign' pk=task.id %}" class="btn btn-outline-success">
+                            Assign me from this task
+                          </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <ul>
+                      {% for assignee in object.assignees.all %}
+                        <li>{{ assignee.first_name }} {{ assignee.last_name }} ({{ assignee.position.name }})</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- End Content -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
